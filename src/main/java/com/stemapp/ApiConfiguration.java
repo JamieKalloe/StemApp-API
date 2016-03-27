@@ -18,6 +18,22 @@ public class ApiConfiguration extends Configuration implements AssetsBundleConfi
     @JsonProperty
     private String apiName;
 
+    @NotEmpty
+    @JsonProperty
+    private String databaseURL;
+
+    @NotEmpty
+    @JsonProperty
+    private String databaseUser;
+
+    @NotEmpty
+    @JsonProperty
+    private String databasePwd;
+
+    @NotEmpty
+    @JsonProperty
+    private String databaseName;
+
     @Valid
     @NotNull
     @JsonProperty
@@ -30,6 +46,39 @@ public class ApiConfiguration extends Configuration implements AssetsBundleConfi
     public void setApiName(String apiName) {
         this.apiName = apiName;
     }
+
+    public String getDatabaseURL() {
+        return this.databaseURL;
+    }
+
+    public void setDatabaseURL(String databaseURL) {
+        this.databaseURL = databaseURL;
+    }
+
+    public String getDatabaseUser() {
+        return this.databaseUser;
+    }
+
+    public void setDatabaseUser(String databaseUser) {
+        this.databaseUser = databaseUser;
+    }
+
+    public String getDatabasePwd() {
+        return this.databasePwd;
+    }
+
+    public void setDatabasePwd(String databasePwd) {
+        this.databasePwd = databasePwd;
+    }
+
+    public String getDatabaseName() {
+        return this.databaseName;
+    }
+
+    public void setDatabaseName(String databaseName) {
+        this.databaseName = databaseName;
+    }
+
 
     @Valid
     @NotNull
