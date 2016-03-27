@@ -32,7 +32,7 @@ public class RegioService extends BaseService<Regio>{
     public void update(int id, Regio regio) {
         //Check if it exists
         Regio checkRegio = get(id);
-        
+
         dao.update(id, regio);
     }
 
