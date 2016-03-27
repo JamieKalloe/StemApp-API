@@ -2,7 +2,7 @@ apiName: "StemApp-API"
 
 databaseURL: "localhost:3306"
 databaseUser: "root"
-databasePwd: "root"
+databasePwd: ""
 databaseName: "stemapp"
 
 server:

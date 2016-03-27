@@ -1,5 +1,6 @@
 package com.stemapp;
 
+import com.stemapp.database.Database;
 import com.stemapp.persistence.RegioDAO;
 import com.stemapp.resource.RegioResource;
 import com.stemapp.service.RegioService;
@@ -37,6 +38,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
     @Override
     public void run(ApiConfiguration configuration, Environment environment) throws Exception {
         this.name = configuration.getApiName();
+        Database.getInstance(configuration);
 
         logger.info(String.format("Set API name to %s", this.name));
 

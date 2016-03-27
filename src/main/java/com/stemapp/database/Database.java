@@ -35,6 +35,12 @@ public class Database {
 
     private Database(ApiConfiguration configuration) {
 
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         String driver = "jdbc:mysql://";
         String user = configuration.getDatabaseUser();
         String password = configuration.getDatabasePwd();

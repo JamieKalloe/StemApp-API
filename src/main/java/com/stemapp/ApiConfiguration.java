@@ -26,7 +26,6 @@ public class ApiConfiguration extends Configuration implements AssetsBundleConfi
     @JsonProperty
     private String databaseUser;
 
-    @NotEmpty
     @JsonProperty
     private String databasePwd;
 
