@@ -20,6 +20,10 @@ public class School {
     @JsonView(View.Private.class)
     private int id;
 
+    public School() {
+
+    }
+
     public String getName() {
         return this.name;
     }

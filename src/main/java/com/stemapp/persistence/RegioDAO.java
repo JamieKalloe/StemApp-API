@@ -16,10 +16,10 @@ public class RegioDAO {
 
     //Variables
     private List<Regio> regios;
-    private final Database databaseIntance;
+    private final Database databaseInstance;
 
     public RegioDAO() {
-        this.databaseIntance = Database.getInstance();
+        this.databaseInstance = Database.getInstance();
         regios = this.getAllFromDatabase();
     }
 
@@ -64,7 +64,7 @@ public class RegioDAO {
 
     private List<Regio> getAllFromDatabase() {
         List<Regio> regioList = new ArrayList<>();
-        ResultSet results = databaseIntance.select("regio");
+        ResultSet results = databaseInstance.select("regio");
 
         try {
             while(results.next()) {
@@ -88,7 +88,7 @@ public class RegioDAO {
 
         databaseData.put("naam", regio.getName());
 
-        int id = databaseIntance.insertInto("regio", databaseData);
+        int id = databaseInstance.insertInto("regio", databaseData);
         regio.setId(id);
         return regio;
     }
@@ -99,10 +99,10 @@ public class RegioDAO {
         databaseData.put("id", regio.getId());
         databaseData.put("naam", regio.getName());
 
-        databaseIntance.update("regio", regio.getId(), databaseData);
+        databaseInstance.update("regio", regio.getId(), databaseData);
     }
 
     private void removeRegioFromDatabase(Regio regio) {
-        databaseIntance.delete("regio", regio.getId());
+        databaseInstance.delete("regio", regio.getId());
     }
 }

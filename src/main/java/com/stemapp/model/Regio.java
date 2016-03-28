@@ -20,6 +20,10 @@ public class Regio {
     //Constructor
     public Regio() {}
 
+    public Regio(int id) {
+        this.id = id;
+    }
+
     public Regio(int id, String name) {
         this.id = id;
         this.name = name;
