@@ -14,11 +14,15 @@ public class Regio {
     @JsonView(View.Public.class)
     private String name;
 
-    @JsonView(View.Private.class)
+    @JsonView(View.Public.class)
     private int id;
 
     //Constructor
     public Regio() {}
+
+    public Regio(int id) {
+        this.id = id;
+    }
 
     public Regio(int id, String name) {
         this.id = id;

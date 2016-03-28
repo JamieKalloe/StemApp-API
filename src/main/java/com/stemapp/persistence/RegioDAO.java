@@ -16,10 +16,10 @@ public class RegioDAO {
 
     //Variables
     private List<Regio> regios;
-    private final Database databaseIntance;
+    private final Database databaseInstance;
 
     public RegioDAO() {
-        this.databaseIntance = Database.getInstance();
+        this.databaseInstance = Database.getInstance();
         regios = this.getAllFromDatabase();
     }
 
@@ -42,9 +42,40 @@ public class RegioDAO {
         }
     }
 
+    public Regio getByName(String name) {
+        try {
+            for(Regio regio : regios) {
+                if(regio.getName().toLowerCase().equals(name.toLowerCase())) {
+                    return regio;
+                }
+            }
+            return null;
+
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean exists(Regio checkRegio) {
+        try {
+            for(Regio regio : regios) {
+                if(regio.getName().toLowerCase().equals(checkRegio.getName().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public void add(Regio regio) {
-        regio = this.addRegioToDatabase(regio);
-        regios.add(regio);
+        if(!exists(regio)) {
+            regio = this.addRegioToDatabase(regio);
+            regios.add(regio);
+        }
     }
 
     public void update(int id, Regio regio) {
@@ -64,7 +95,7 @@ public class RegioDAO {
 
     private List<Regio> getAllFromDatabase() {
         List<Regio> regioList = new ArrayList<>();
-        ResultSet results = databaseIntance.select("regio");
+        ResultSet results = databaseInstance.select("regio");
 
         try {
             while(results.next()) {
@@ -88,7 +119,7 @@ public class RegioDAO {
 
         databaseData.put("naam", regio.getName());
 
-        int id = databaseIntance.insertInto("regio", databaseData);
+        int id = databaseInstance.insertInto("regio", databaseData);
         regio.setId(id);
         return regio;
     }
@@ -99,10 +130,10 @@ public class RegioDAO {
         databaseData.put("id", regio.getId());
         databaseData.put("naam", regio.getName());
 
-        databaseIntance.update("regio", regio.getId(), databaseData);
+        databaseInstance.update("regio", regio.getId(), databaseData);
     }
 
     private void removeRegioFromDatabase(Regio regio) {
-        databaseIntance.delete("regio", regio.getId());
+        databaseInstance.delete("regio", regio.getId());
     }
 }
