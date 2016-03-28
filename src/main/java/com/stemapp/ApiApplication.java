@@ -60,15 +60,14 @@ public class ApiApplication extends Application<ApiConfiguration> {
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
-//        CsvResource csvResource = new CsvResource(csvService);
-        csvService.importMBO(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data middelbaar beroepsonderwijs.csv"));
+        CsvResource csvResource = new CsvResource(csvService);
 
         //Register
         configureClientFilter(environment);
 
         environment.jersey().register(regioResource);
         environment.jersey().register(schoolResource);
-//        environment.jersey().register(csvResource);
+        environment.jersey().register(csvResource);
     }
 
     private void configureClientFilter(Environment environment) {

@@ -24,9 +24,9 @@ public class CsvResource {
         this.service = service;
     }
 
-    @GET
-    public void importCSV() {
-        service.importMiddleSchool(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data voortgezet onderwijs.csv"));
-    }
+//    @GET
+//    public void importCSV() {
+//        service.importMiddleSchool(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data voortgezet onderwijs.csv"));
+//    }
 
 }
