@@ -1,10 +1,13 @@
 package com.stemapp;
 
 import com.stemapp.database.Database;
+import com.stemapp.persistence.CsvDAO;
 import com.stemapp.persistence.RegioDAO;
 import com.stemapp.persistence.SchoolDAO;
+import com.stemapp.resource.CsvResource;
 import com.stemapp.resource.RegioResource;
 import com.stemapp.resource.SchoolResource;
+import com.stemapp.service.CsvService;
 import com.stemapp.service.RegioService;
 import com.stemapp.service.SchoolService;
 import io.dropwizard.Application;
@@ -17,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.servlet.DispatcherType;
+import java.io.File;
 import java.util.EnumSet;
 
 /**
@@ -48,18 +52,23 @@ public class ApiApplication extends Application<ApiConfiguration> {
         //Create and register DAOs, Services and Resources.
         RegioDAO regioDAO = new RegioDAO();
         SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
+        CsvDAO csvDAO = new CsvDAO(regioDAO, schoolDAO);
 
         RegioService regioService = new RegioService(regioDAO);
         SchoolService schoolService = new SchoolService(schoolDAO);
+        CsvService csvService = new CsvService(csvDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
+//        CsvResource csvResource = new CsvResource(csvService);
+        csvService.importMiddleSchool(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data voortgezet onderwijs.csv"));
 
         //Register
         configureClientFilter(environment);
 
         environment.jersey().register(regioResource);
         environment.jersey().register(schoolResource);
+//        environment.jersey().register(csvResource);
     }
 
     private void configureClientFilter(Environment environment) {

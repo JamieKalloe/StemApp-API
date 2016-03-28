@@ -45,10 +45,26 @@ public class SchoolDAO {
         }
     }
 
+    public boolean exists(School checkSchool) {
+        try {
+            for(School school : schools) {
+                if(school.getName().toLowerCase().equals(checkSchool.getName().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public void add(School school) {
-        school = this.addSchoolToDatabase(school);
-        school.setRegio(regioDAO.get(school.getRegio().getId()));
-        schools.add(school);
+        if(!exists(school)) {
+            school = this.addSchoolToDatabase(school);
+            school.setRegio(regioDAO.get(school.getRegio().getId()));
+            schools.add(school);
+        }
     }
 
     public void update(int id, School school) {

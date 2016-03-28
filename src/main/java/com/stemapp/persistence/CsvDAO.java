@@ -48,10 +48,10 @@ public class CsvDAO {
         if(middleSchoolData != null) {
             for(int i = 0; i < middleSchoolData.size(); i++) {
                 Regio regio = new Regio();
-                regio.setName(middleSchoolData.get(i)[31]);
+                regio.setName(middleSchoolData.get(i)[30].replace("'", "''"));
 
                 School school = new School();
-                school.setName(middleSchoolData.get(i)[5]);
+                school.setName(middleSchoolData.get(i)[4].replace("'", "''"));
                 school.setRegio(regio);
                 schoolList.add(school);
 
@@ -62,6 +62,7 @@ public class CsvDAO {
 
             for(School school : schoolList) {
                 school.setRegio(regioDAO.getByName(school.getRegio().getName()));
+
                 schoolDAO.add(school);
             }
             System.out.println("Imported " + schoolList.size() + " schools");

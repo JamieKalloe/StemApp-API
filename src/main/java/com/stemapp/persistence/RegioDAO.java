@@ -57,9 +57,25 @@ public class RegioDAO {
         }
     }
 
+    public boolean exists(Regio checkRegio) {
+        try {
+            for(Regio regio : regios) {
+                if(regio.getName().toLowerCase().equals(checkRegio.getName().toLowerCase())) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
     public void add(Regio regio) {
-        regio = this.addRegioToDatabase(regio);
-        regios.add(regio);
+        if(!exists(regio)) {
+            regio = this.addRegioToDatabase(regio);
+            regios.add(regio);
+        }
     }
 
     public void update(int id, Regio regio) {
