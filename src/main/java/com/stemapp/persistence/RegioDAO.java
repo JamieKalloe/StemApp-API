@@ -42,6 +42,21 @@ public class RegioDAO {
         }
     }
 
+    public Regio getByName(String name) {
+        try {
+            for(Regio regio : regios) {
+                if(regio.getName().toLowerCase().equals(name.toLowerCase())) {
+                    return regio;
+                }
+            }
+            return null;
+
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void add(Regio regio) {
         regio = this.addRegioToDatabase(regio);
         regios.add(regio);
