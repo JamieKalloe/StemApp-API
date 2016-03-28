@@ -61,7 +61,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
 //        CsvResource csvResource = new CsvResource(csvService);
-        csvService.importMiddleSchool(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data voortgezet onderwijs.csv"));
+        csvService.importMBO(new File("D:\\School\\Hoofdfase\\Periode 3\\ipsen4\\data\\Data middelbaar beroepsonderwijs.csv"));
 
         //Register
         configureClientFilter(environment);

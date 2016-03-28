@@ -40,7 +40,7 @@ public class CsvDAO {
         return allRows;
     }
 
-    public void importMiddleSchool(File file) {
+    private void importData(File file, int...index) {
         List<String[]> middleSchoolData = this.readCSV(file);
         ArrayList<School> schoolList = new ArrayList<>();
 
@@ -48,10 +48,10 @@ public class CsvDAO {
         if(middleSchoolData != null) {
             for(int i = 0; i < middleSchoolData.size(); i++) {
                 Regio regio = new Regio();
-                regio.setName(middleSchoolData.get(i)[30].replace("'", "''"));
+                regio.setName(middleSchoolData.get(i)[index[0]].replace("'", "''"));
 
                 School school = new School();
-                school.setName(middleSchoolData.get(i)[4].replace("'", "''"));
+                school.setName(middleSchoolData.get(i)[index[1]].replace("'", "''"));
                 school.setRegio(regio);
                 schoolList.add(school);
 
@@ -70,6 +70,10 @@ public class CsvDAO {
     }
 
     public void importMBO(File file) {
-        System.out.println();
+        this.importData(file, 30, 5);
+    }
+
+    public void importMiddleSchool(File file) {
+        this.importData(file, 30, 4);
     }
 }
