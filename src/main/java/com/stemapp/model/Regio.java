@@ -25,7 +25,6 @@ public class Regio {
         this.name = name;
     }
 
-    //Getters / Setters
     public String getName() {
         return this.name;
     }
