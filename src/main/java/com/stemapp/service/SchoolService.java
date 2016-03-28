@@ -23,12 +23,12 @@ public class SchoolService extends BaseService<School> {
     }
 
     public School get(int id) {
-        //Get the school from the DAO, throws exception if not found.
-        School school = requireResult(dao.get(id));
-
-        //Get the Regio data from the RegioDAO, given the RegioId from the School model.
-        school.setRegio(new RegioDAO().get(school.getRegio().getId()));
-        return school;
+//        //Get the school from the DAO, throws exception if not found.
+//        School school = requireResult(dao.get(id));
+//
+//        //Get the Regio data from the RegioDAO, given the RegioId from the School model.
+//        school.setRegio(new RegioDAO().get(school.getRegio().getId()));
+        return requireResult(dao.get(id));
     }
 
     public void add(School school) {
@@ -44,7 +44,7 @@ public class SchoolService extends BaseService<School> {
 
     public void delete(int id) {
         //Check if the school exists
-        School checkSchol = get(id);
+        School checkSchool = get(id);
 
         dao.delete(id);
     }

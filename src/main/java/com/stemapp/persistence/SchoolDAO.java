@@ -18,9 +18,11 @@ public class SchoolDAO {
     //Variables
     private List<School> schools;
     private final Database databaseInstance;
+    private final RegioDAO regioDAO;
 
-    public SchoolDAO() {
+    public SchoolDAO(RegioDAO regioDAO) {
         this.databaseInstance = Database.getInstance();
+        this.regioDAO = regioDAO;
         this.schools = getAllFromDatabase();
     }
 
@@ -73,7 +75,8 @@ public class SchoolDAO {
 
                 school.setId(results.getInt("id"));
                 school.setName(results.getString("naam"));
-                school.setRegio(new Regio(results.getInt("regio_id")));
+//                school.setRegio(new Regio(results.getInt("regio_id")));
+                school.setRegio(regioDAO.get(results.getInt("regio_id")));
 
                 schoolList.add(school);
             }
