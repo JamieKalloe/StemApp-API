@@ -92,5 +92,6 @@
     <orderEntry type="library" name="Maven: io.dropwizard-bundles:dropwizard-configurable-assets-bundle:0.8.1-1" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.36" level="project" />
+    <orderEntry type="library" name="opencsv-3.5" level="project" />
   </component>
 </module>
