@@ -2,8 +2,11 @@ package com.stemapp;
 
 import com.stemapp.database.Database;
 import com.stemapp.persistence.RegioDAO;
+import com.stemapp.persistence.SchoolDAO;
 import com.stemapp.resource.RegioResource;
+import com.stemapp.resource.SchoolResource;
 import com.stemapp.service.RegioService;
+import com.stemapp.service.SchoolService;
 import io.dropwizard.Application;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
@@ -44,15 +47,19 @@ public class ApiApplication extends Application<ApiConfiguration> {
 
         //Create and register DAOs, Services and Resources.
         RegioDAO regioDAO = new RegioDAO();
+        SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
 
         RegioService regioService = new RegioService(regioDAO);
+        SchoolService schoolService = new SchoolService(schoolDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
+        SchoolResource schoolResource = new SchoolResource(schoolService);
 
         //Register
         configureClientFilter(environment);
 
         environment.jersey().register(regioResource);
+        environment.jersey().register(schoolResource);
     }
 
     private void configureClientFilter(Environment environment) {

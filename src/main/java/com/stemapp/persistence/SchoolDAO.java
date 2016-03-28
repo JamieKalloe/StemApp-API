@@ -47,6 +47,7 @@ public class SchoolDAO {
 
     public void add(School school) {
         school = this.addSchoolToDatabase(school);
+        school.setRegio(regioDAO.get(school.getRegio().getId()));
         schools.add(school);
     }
 
@@ -56,6 +57,8 @@ public class SchoolDAO {
 
         this.updateSchoolFromDatabase(school);
         int idInList = schools.indexOf(oldSchool);
+
+        school.setRegio(regioDAO.get(school.getRegio().getId()));
         schools.set(idInList, school);
     }
 

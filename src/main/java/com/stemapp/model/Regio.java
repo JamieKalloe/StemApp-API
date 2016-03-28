@@ -14,7 +14,7 @@ public class Regio {
     @JsonView(View.Public.class)
     private String name;
 
-    @JsonView(View.Private.class)
+    @JsonView(View.Public.class)
     private int id;
 
     //Constructor
