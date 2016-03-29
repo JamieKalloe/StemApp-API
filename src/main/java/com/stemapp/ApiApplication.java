@@ -16,10 +16,12 @@ import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import java.io.File;
 import java.util.EnumSet;
 
@@ -46,6 +48,18 @@ public class ApiApplication extends Application<ApiConfiguration> {
     public void run(ApiConfiguration configuration, Environment environment) throws Exception {
         this.name = configuration.getApiName();
         Database.getInstance(configuration);
+
+        //cors
+        final FilterRegistration.Dynamic cors =
+                environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+        // Configure CORS parameters
+        cors.setInitParameter("allowedOrigins", "*");
+        cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+        cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
+        // Add URL mapping
+        cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
 
         logger.info(String.format("Set API name to %s", this.name));
 
