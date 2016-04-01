@@ -127,7 +127,6 @@ public class RegioDAO {
     private void updateRegioFromDatabase(Regio regio) {
         HashMap databaseData = new HashMap();
 
-        databaseData.put("id", regio.getId());
         databaseData.put("naam", regio.getName());
 
         databaseInstance.update("regio", regio.getId(), databaseData);
