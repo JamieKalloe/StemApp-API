@@ -17,7 +17,7 @@ public class School {
     @JsonView(View.Public.class)
     private Regio regio;
 
-    @JsonView(View.Private.class)
+    @JsonView(View.Public.class)
     private int id;
 
     public School() {
