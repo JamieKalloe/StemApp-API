@@ -1,12 +1,15 @@
 package com.stemapp;
 
 import com.stemapp.database.Database;
+import com.stemapp.persistence.CategorieDAO;
 import com.stemapp.persistence.CsvDAO;
 import com.stemapp.persistence.RegioDAO;
 import com.stemapp.persistence.SchoolDAO;
+import com.stemapp.resource.CategorieResource;
 import com.stemapp.resource.CsvResource;
 import com.stemapp.resource.RegioResource;
 import com.stemapp.resource.SchoolResource;
+import com.stemapp.service.CategorieService;
 import com.stemapp.service.CsvService;
 import com.stemapp.service.RegioService;
 import com.stemapp.service.SchoolService;
@@ -67,14 +70,17 @@ public class ApiApplication extends Application<ApiConfiguration> {
         RegioDAO regioDAO = new RegioDAO();
         SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
         CsvDAO csvDAO = new CsvDAO(regioDAO, schoolDAO);
+        CategorieDAO categorieDAO = new CategorieDAO();
 
         RegioService regioService = new RegioService(regioDAO);
         SchoolService schoolService = new SchoolService(schoolDAO);
         CsvService csvService = new CsvService(csvDAO);
+        CategorieService categorieService = new CategorieService(categorieDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
         CsvResource csvResource = new CsvResource(csvService);
+        CategorieResource categorieResource = new CategorieResource(categorieService);
 
         //Register
         configureClientFilter(environment);
@@ -82,6 +88,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         environment.jersey().register(regioResource);
         environment.jersey().register(schoolResource);
         environment.jersey().register(csvResource);
+        environment.jersey().register(categorieResource);
     }
 
     private void configureClientFilter(Environment environment) {
