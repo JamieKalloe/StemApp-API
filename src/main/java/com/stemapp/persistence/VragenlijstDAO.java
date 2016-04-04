@@ -96,10 +96,10 @@ public class VragenlijstDAO {
         databaseData.put("naam", vragenlijst.getNaam());
         databaseData.put("categorie_id", vragenlijst.getCategorie().getId());
         databaseData.put("status", vragenlijst.getStatus());
-        databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
-        databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum());
-        databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum());
-        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum());
+        databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum().toString());
+        databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum().toString());
+        databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum().toString());
+        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum().toString());
 
         int id = databaseInstance.insertInto("vragenlijst", databaseData);
         vragenlijst.setId(id);
@@ -113,10 +113,10 @@ public class VragenlijstDAO {
         databaseData.put("naam", vragenlijst.getNaam());
         databaseData.put("categorie_id", vragenlijst.getCategorie().getId());
         databaseData.put("status", vragenlijst.getStatus());
-        databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
-        databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum());
-        databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum());
-        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum());
+        databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum().toString());
+        databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum().toString());
+        databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum().toString());
+        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum().toString());
 
         databaseInstance.update("vragenlijst", vragenlijst.getId(), databaseData);
     }
