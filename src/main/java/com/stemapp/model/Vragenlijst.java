@@ -15,6 +15,9 @@ public class Vragenlijst {
     private int id;
 
     @JsonView(View.Public.class)
+    private String naam;
+
+    @JsonView(View.Public.class)
     private Categorie categorie;
 
     @JsonView(View.Public.class)
@@ -25,6 +28,10 @@ public class Vragenlijst {
 
     public int getId() {
         return this.id;
+    }
+
+    public String getNaam() {
+        return this.naam;
     }
 
     public Categorie getCategorie() {
@@ -53,6 +60,10 @@ public class Vragenlijst {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setNaam(String naam) {
+        this.naam = naam;
     }
 
     public void setCategorie(Categorie categorie) {

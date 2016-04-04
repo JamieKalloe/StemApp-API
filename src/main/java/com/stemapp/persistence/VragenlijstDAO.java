@@ -72,6 +72,7 @@ public class VragenlijstDAO {
                 Vragenlijst vragenlijst = new Vragenlijst();
 
                 vragenlijst.setId(results.getInt("id"));
+                vragenlijst.setNaam(results.getString("naam"));
                 vragenlijst.setCategorie(new Categorie(results.getInt("categorie_id")));
                 vragenlijst.setStatus(results.getBoolean("status"));
                 vragenlijst.setStudentStartDatum(results.getDate("start_datum_student"));
@@ -92,6 +93,7 @@ public class VragenlijstDAO {
     private Vragenlijst addVragenlijstToDatabase(Vragenlijst vragenlijst) {
         HashMap databaseData = new HashMap();
 
+        databaseData.put("naam", vragenlijst.getNaam());
         databaseData.put("categorie_id", vragenlijst.getCategorie().getId());
         databaseData.put("status", vragenlijst.getStatus());
         databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
@@ -108,6 +110,7 @@ public class VragenlijstDAO {
     private void updateVragenlijstFromDatabase(Vragenlijst vragenlijst) {
         HashMap databaseData = new HashMap();
 
+        databaseData.put("naam", vragenlijst.getNaam());
         databaseData.put("categorie_id", vragenlijst.getCategorie().getId());
         databaseData.put("status", vragenlijst.getStatus());
         databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
