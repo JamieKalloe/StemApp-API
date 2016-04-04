@@ -97,7 +97,7 @@ public class VragenlijstDAO {
         databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
         databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum());
         databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum());
-        databaseData.put("eind_datum_politci", vragenlijst.getPoliticiEindDatum());
+        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum());
 
         int id = databaseInstance.insertInto("vragenlijst", databaseData);
         vragenlijst.setId(id);
@@ -113,7 +113,7 @@ public class VragenlijstDAO {
         databaseData.put("start_datum_student", vragenlijst.getStudentStartDatum());
         databaseData.put("eind_datum_student", vragenlijst.getStudentEindDatum());
         databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum());
-        databaseData.put("eind_datum_politci", vragenlijst.getPoliticiEindDatum());
+        databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum());
 
         databaseInstance.update("vragenlijst", vragenlijst.getId(), databaseData);
     }

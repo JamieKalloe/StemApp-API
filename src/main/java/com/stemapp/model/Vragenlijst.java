@@ -3,7 +3,7 @@ package com.stemapp.model;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.stemapp.View;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by Jamie on 4-4-2016.

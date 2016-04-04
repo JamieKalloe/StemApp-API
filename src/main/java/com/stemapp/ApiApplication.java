@@ -1,18 +1,9 @@
 package com.stemapp;
 
 import com.stemapp.database.Database;
-import com.stemapp.persistence.CategorieDAO;
-import com.stemapp.persistence.CsvDAO;
-import com.stemapp.persistence.RegioDAO;
-import com.stemapp.persistence.SchoolDAO;
-import com.stemapp.resource.CategorieResource;
-import com.stemapp.resource.CsvResource;
-import com.stemapp.resource.RegioResource;
-import com.stemapp.resource.SchoolResource;
-import com.stemapp.service.CategorieService;
-import com.stemapp.service.CsvService;
-import com.stemapp.service.RegioService;
-import com.stemapp.service.SchoolService;
+import com.stemapp.persistence.*;
+import com.stemapp.resource.*;
+import com.stemapp.service.*;
 import io.dropwizard.Application;
 import io.dropwizard.ConfiguredBundle;
 import io.dropwizard.bundles.assets.ConfiguredAssetsBundle;
@@ -71,16 +62,19 @@ public class ApiApplication extends Application<ApiConfiguration> {
         SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
         CsvDAO csvDAO = new CsvDAO(regioDAO, schoolDAO);
         CategorieDAO categorieDAO = new CategorieDAO();
+        VragenlijstDAO vragenlijstDAO = new VragenlijstDAO();
 
         RegioService regioService = new RegioService(regioDAO);
         SchoolService schoolService = new SchoolService(schoolDAO);
         CsvService csvService = new CsvService(csvDAO);
         CategorieService categorieService = new CategorieService(categorieDAO);
+        VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
         CsvResource csvResource = new CsvResource(csvService);
         CategorieResource categorieResource = new CategorieResource(categorieService);
+        VragenlijstResource vragenlijstResource = new VragenlijstResource(vragenlijstService);
 
         //Register
         configureClientFilter(environment);
@@ -89,6 +83,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         environment.jersey().register(schoolResource);
         environment.jersey().register(csvResource);
         environment.jersey().register(categorieResource);
+        environment.jersey().register(vragenlijstResource);
     }
 
     private void configureClientFilter(Environment environment) {
