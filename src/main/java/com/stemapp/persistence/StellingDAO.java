@@ -2,6 +2,7 @@ package com.stemapp.persistence;
 
 import com.stemapp.database.Database;
 import com.stemapp.model.Stelling;
+import com.stemapp.model.Vragenlijst;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,6 +41,18 @@ public class StellingDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public List<Stelling> get(Vragenlijst vragenlijst) {
+        List<Stelling> stellingList = new ArrayList<>();
+
+        for(Stelling stelling : stellingen) {
+            if(stelling.getVragenlijstId() == vragenlijst.getId()) {
+                stellingList.add(stelling);
+            }
+        }
+
+        return stellingList;
     }
 
     public void add(Stelling stelling) {

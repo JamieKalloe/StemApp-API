@@ -2,6 +2,7 @@ package com.stemapp.service;
 
 import com.stemapp.model.Vragenlijst;
 import com.stemapp.persistence.CategorieDAO;
+import com.stemapp.persistence.StellingDAO;
 import com.stemapp.persistence.VragenlijstDAO;
 
 import java.util.Collection;
@@ -14,10 +15,12 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
     //Variables
     private final VragenlijstDAO vragenlijstDAO;
     private final CategorieDAO categorieDAO;
+    private final StellingDAO stellingDAO;
 
-    public VragenlijstService(VragenlijstDAO vragenlijstDAO, CategorieDAO categorieDAO) {
+    public VragenlijstService(VragenlijstDAO vragenlijstDAO, CategorieDAO categorieDAO, StellingDAO stellingDAO) {
         this.vragenlijstDAO = vragenlijstDAO;
         this.categorieDAO = categorieDAO;
+        this.stellingDAO = stellingDAO;
 
     }
 
@@ -26,6 +29,7 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         Collection<Vragenlijst> vragenlijsten = vragenlijstDAO.getAll();
         for(Vragenlijst vragenlijst : vragenlijsten) {
             vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
+            vragenlijst.setStellingen(stellingDAO.get(vragenlijst));
         }
 
         return vragenlijsten;

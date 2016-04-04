@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.stemapp.View;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Jamie on 4-4-2016.
@@ -25,6 +27,9 @@ public class Vragenlijst {
 
     @JsonView(View.Public.class)
     private boolean status;
+
+    @JsonView(View.Public.class)
+    private List<Stelling> stellingen;
 
     public int getId() {
         return this.id;
@@ -88,5 +93,9 @@ public class Vragenlijst {
 
     public void setPoliticiEindDatum(Date politiciEindDatum) {
         this.politiciEindDatum = politiciEindDatum;
+    }
+
+    public void setStellingen(List<Stelling> stellingen) {
+        this.stellingen = stellingen;
     }
 }

@@ -61,6 +61,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         RegioDAO regioDAO = new RegioDAO();
         SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
         CsvDAO csvDAO = new CsvDAO(regioDAO, schoolDAO);
+        StellingDAO stellingDAO = new StellingDAO();
         CategorieDAO categorieDAO = new CategorieDAO();
         VragenlijstDAO vragenlijstDAO = new VragenlijstDAO();
 
@@ -68,7 +69,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         SchoolService schoolService = new SchoolService(schoolDAO);
         CsvService csvService = new CsvService(csvDAO);
         CategorieService categorieService = new CategorieService(categorieDAO);
-        VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO);
+        VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO, stellingDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
