@@ -26,7 +26,7 @@ public class Stelling {
         return this.id;
     }
 
-    private int getVragenlijstId() {
+    public int getVragenlijstId() {
         return this.vragenlijstId;
     }
 
