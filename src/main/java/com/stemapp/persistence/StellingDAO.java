@@ -28,6 +28,18 @@ public class StellingDAO {
         return this.stellingen;
     }
 
+    public List<Stelling> getAll(int id) {
+        List<Stelling> stellingList = new ArrayList<>();
+
+        for(Stelling stelling : stellingen) {
+            if(stelling.getVragenlijstId() == id) {
+                stellingList.add(stelling);
+            }
+        }
+
+        return stellingList;
+    }
+
     public Stelling get(int id) {
         try {
             for(Stelling stelling : stellingen) {
@@ -41,18 +53,6 @@ public class StellingDAO {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public List<Stelling> get(Vragenlijst vragenlijst) {
-        List<Stelling> stellingList = new ArrayList<>();
-
-        for(Stelling stelling : stellingen) {
-            if(stelling.getVragenlijstId() == vragenlijst.getId()) {
-                stellingList.add(stelling);
-            }
-        }
-
-        return stellingList;
     }
 
     public void add(Stelling stelling) {

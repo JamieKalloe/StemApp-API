@@ -29,7 +29,7 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         Collection<Vragenlijst> vragenlijsten = vragenlijstDAO.getAll();
         for(Vragenlijst vragenlijst : vragenlijsten) {
             vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
-            vragenlijst.setStellingen(stellingDAO.get(vragenlijst));
+            vragenlijst.setStellingen(stellingDAO.getAll(vragenlijst.getId()));
         }
 
         return vragenlijsten;
@@ -38,6 +38,7 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
     public Vragenlijst get(int id) {
         Vragenlijst vragenlijst = vragenlijstDAO.get(id);
         vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
+        vragenlijst.setStellingen(stellingDAO.getAll(vragenlijst.getId()));
 
         return requireResult(vragenlijst);
     }
