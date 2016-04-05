@@ -69,12 +69,14 @@ public class ApiApplication extends Application<ApiConfiguration> {
         SchoolService schoolService = new SchoolService(schoolDAO);
         CsvService csvService = new CsvService(csvDAO);
         CategorieService categorieService = new CategorieService(categorieDAO);
+        StellingService stellingService = new StellingService(stellingDAO);
         VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO, stellingDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);
         CsvResource csvResource = new CsvResource(csvService);
         CategorieResource categorieResource = new CategorieResource(categorieService);
+        StellingResource stellingResource = new StellingResource(stellingService);
         VragenlijstResource vragenlijstResource = new VragenlijstResource(vragenlijstService);
 
         //Register
@@ -84,6 +86,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         environment.jersey().register(schoolResource);
         environment.jersey().register(csvResource);
         environment.jersey().register(categorieResource);
+        environment.jersey().register(stellingResource);
         environment.jersey().register(vragenlijstResource);
     }
 
