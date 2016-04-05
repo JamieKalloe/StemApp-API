@@ -70,7 +70,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         CsvService csvService = new CsvService(csvDAO);
         CategorieService categorieService = new CategorieService(categorieDAO);
         StellingService stellingService = new StellingService(stellingDAO);
-        VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO, stellingDAO);
+        VragenlijstService vragenlijstService = new VragenlijstService(vragenlijstDAO, categorieDAO, stellingDAO, regioDAO);
 
         RegioResource regioResource = new RegioResource(regioService);
         SchoolResource schoolResource = new SchoolResource(schoolService);

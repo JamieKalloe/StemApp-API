@@ -27,6 +27,10 @@ public class RegioDAO {
         return this.regios;
     }
 
+    public List<Regio> getAll(int id) {
+        return this.getAllFromDatabaseFor(id);
+    }
+
     public Regio get(int id) {
         try {
             for(Regio regio : regios) {
@@ -104,6 +108,25 @@ public class RegioDAO {
                 regio.setId(results.getInt("id"));
                 regio.setName(results.getString("naam"));
 
+                regioList.add(regio);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return regioList;
+    }
+
+    private List<Regio> getAllFromDatabaseFor(int id) {
+        List<Regio> regioList = new ArrayList<>();
+        ResultSet results = databaseInstance.select("regio_vragenlijst", "vragenlijst_id=" + id);
+
+        try {
+            while(results.next()) {
+                Regio regio = new Regio();
+
+                regio.setId(results.getInt("regio_id"));
                 regioList.add(regio);
             }
         } catch (SQLException e) {

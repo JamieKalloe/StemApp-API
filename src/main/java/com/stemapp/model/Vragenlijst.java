@@ -31,6 +31,9 @@ public class Vragenlijst {
     @JsonView(View.Public.class)
     private List<Stelling> stellingen;
 
+    @JsonView(View.Public.class)
+    private List<Regio> regios;
+
     public int getId() {
         return this.id;
     }
@@ -61,6 +64,14 @@ public class Vragenlijst {
 
     public Date getPoliticiEindDatum() {
         return this.politiciEindDatum;
+    }
+
+    public List<Stelling> getStellingen() {
+        return this.stellingen;
+    }
+
+    public List<Regio> getRegios() {
+        return this.regios;
     }
 
     public void setId(int id) {
@@ -98,4 +109,9 @@ public class Vragenlijst {
     public void setStellingen(List<Stelling> stellingen) {
         this.stellingen = stellingen;
     }
+
+    public void setRegios(List<Regio> regios) {
+        this.regios = regios;
+    }
+
 }

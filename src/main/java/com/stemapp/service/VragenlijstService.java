@@ -1,7 +1,9 @@
 package com.stemapp.service;
 
+import com.stemapp.model.Regio;
 import com.stemapp.model.Vragenlijst;
 import com.stemapp.persistence.CategorieDAO;
+import com.stemapp.persistence.RegioDAO;
 import com.stemapp.persistence.StellingDAO;
 import com.stemapp.persistence.VragenlijstDAO;
 
@@ -16,12 +18,13 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
     private final VragenlijstDAO vragenlijstDAO;
     private final CategorieDAO categorieDAO;
     private final StellingDAO stellingDAO;
+    private final RegioDAO regioDAO;
 
-    public VragenlijstService(VragenlijstDAO vragenlijstDAO, CategorieDAO categorieDAO, StellingDAO stellingDAO) {
+    public VragenlijstService(VragenlijstDAO vragenlijstDAO, CategorieDAO categorieDAO, StellingDAO stellingDAO, RegioDAO regioDAO) {
         this.vragenlijstDAO = vragenlijstDAO;
         this.categorieDAO = categorieDAO;
         this.stellingDAO = stellingDAO;
-
+        this.regioDAO = regioDAO;
     }
 
     public Collection<Vragenlijst> getAll() {
@@ -30,6 +33,11 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         for(Vragenlijst vragenlijst : vragenlijsten) {
             vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
             vragenlijst.setStellingen(stellingDAO.getAll(vragenlijst.getId()));
+            vragenlijst.setRegios(regioDAO.getAll(vragenlijst.getId()));
+
+            for(Regio regio : vragenlijst.getRegios()) {
+                vragenlijst.getRegios().set(vragenlijst.getRegios().indexOf(regio), regioDAO.get(regio.getId()));
+            }
         }
 
         return vragenlijsten;
@@ -39,6 +47,11 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         Vragenlijst vragenlijst = vragenlijstDAO.get(id);
         vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
         vragenlijst.setStellingen(stellingDAO.getAll(vragenlijst.getId()));
+        vragenlijst.setRegios(regioDAO.getAll(vragenlijst.getId()));
+
+        for(Regio regio : vragenlijst.getRegios()) {
+            vragenlijst.getRegios().set(vragenlijst.getRegios().indexOf(regio), regioDAO.get(regio.getId()));
+        }
 
         return requireResult(vragenlijst);
     }
