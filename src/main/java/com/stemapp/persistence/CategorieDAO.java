@@ -2,6 +2,7 @@ package com.stemapp.persistence;
 
 import com.stemapp.database.Database;
 import com.stemapp.model.Categorie;
+import com.stemapp.model.Vragenlijst;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

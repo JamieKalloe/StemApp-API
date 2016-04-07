@@ -1,11 +1,13 @@
 package com.stemapp.persistence;
 
+import com.stemapp.model.Model;
+
 import java.util.List;
 
 /**
  * Created by Jamie on 7-4-2016.
  */
-public interface DAO<T> {
+public interface DAO<T extends Model> {
 
     List<T> getAll();
 

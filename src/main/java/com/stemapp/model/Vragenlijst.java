@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Jamie on 4-4-2016.
  */
-public class Vragenlijst {
+public class Vragenlijst extends Model {
 
     //Variables
     @JsonView(View.Public.class)

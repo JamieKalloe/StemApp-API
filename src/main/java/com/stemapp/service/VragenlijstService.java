@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * Created by Jamie on 4-4-2016.
  */
-public class VragenlijstService extends BaseService<Vragenlijst> {
+public class VragenlijstService extends BaseService<Vragenlijst> implements Service<Vragenlijst> {
 
     //Variables
     private final VragenlijstDAO vragenlijstDAO;
@@ -27,6 +27,7 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         this.regioDAO = regioDAO;
     }
 
+    @Override
     public Collection<Vragenlijst> getAll() {
 
         Collection<Vragenlijst> vragenlijsten = vragenlijstDAO.getAll();
@@ -43,6 +44,7 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         return vragenlijsten;
     }
 
+    @Override
     public Vragenlijst get(int id) {
         Vragenlijst vragenlijst = vragenlijstDAO.get(id);
         vragenlijst.setCategorie(categorieDAO.get(vragenlijst.getCategorie().getId()));
@@ -56,14 +58,17 @@ public class VragenlijstService extends BaseService<Vragenlijst> {
         return requireResult(vragenlijst);
     }
 
+    @Override
     public void add(Vragenlijst vragenlijst) {
         vragenlijstDAO.add(vragenlijst);
     }
 
+    @Override
     public void update(int id, Vragenlijst vragenlijst) {
         vragenlijstDAO.update(id, vragenlijst);
     }
 
+    @Override
     public void delete(int id) {
         vragenlijstDAO.delete(id);
     }

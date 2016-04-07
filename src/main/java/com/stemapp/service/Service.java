@@ -1,11 +1,13 @@
 package com.stemapp.service;
 
+import com.stemapp.model.Model;
+
 import java.util.Collection;
 
 /**
  * Created by Jamie on 7-4-2016.
  */
-interface Service<T> {
+interface Service<T extends Model> {
 
     Collection<T> getAll();
 

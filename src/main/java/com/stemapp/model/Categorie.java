@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by Jamie on 1-4-2016.
  */
-public class Categorie {
+public class Categorie extends Model {
 
     @JsonView(View.Public.class)
     private int id;

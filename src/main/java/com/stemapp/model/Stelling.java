@@ -6,7 +6,7 @@ import com.stemapp.View;
 /**
  * Created by Jamie on 4-4-2016.
  */
-public class Stelling {
+public class Stelling extends Model {
 
     @JsonView(View.Public.class)
     private int id, vragenlijstId;

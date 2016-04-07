@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  * Created by Jamie on 28-3-2016.
  */
-public class School {
+public class School extends Model {
 
     //Variables
     @NotEmpty

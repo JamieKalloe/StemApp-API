@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 /**
  * Created by Jamie on 27-3-2016.
  */
-public class Regio {
+public class Regio extends Model {
 
     //Variables
     @NotEmpty
