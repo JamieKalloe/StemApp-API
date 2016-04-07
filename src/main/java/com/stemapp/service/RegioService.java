@@ -29,6 +29,10 @@ public class RegioService extends BaseService<Regio>{
         dao.add(regio);
     }
 
+    public void add(int vragenlijstId, Regio regio) {
+        dao.add(vragenlijstId, regio);
+    }
+
     public void update(int id, Regio regio) {
         dao.update(id, regio);
     }

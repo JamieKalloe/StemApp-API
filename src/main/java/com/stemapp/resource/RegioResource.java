@@ -43,6 +43,14 @@ public class RegioResource {
         service.add(regio);
     }
 
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    @JsonView(View.Protected.class)
+    public void create(@PathParam("id") int id, Regio regio) {
+        service.add(id, regio);
+    }
+
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)

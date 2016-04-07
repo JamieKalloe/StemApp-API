@@ -82,6 +82,10 @@ public class RegioDAO {
         }
     }
 
+    public void add(int id, Regio regio) {
+        regio = this.addRegioToDatabaseFor(id, regio);
+    }
+
     public void update(int id, Regio regio) {
         Regio oldRegio = this.get(id);
         regio.setId(id);
@@ -143,6 +147,18 @@ public class RegioDAO {
         databaseData.put("naam", regio.getName());
 
         int id = databaseInstance.insertInto("regio", databaseData);
+        regio.setId(id);
+        return regio;
+    }
+
+    private Regio addRegioToDatabaseFor(int vragenlijstId, Regio regio) {
+        HashMap databaseData = new HashMap();
+
+        databaseData.put("vragenlijst_id", vragenlijstId);
+        databaseData.put("regio_id", regio.getId());
+
+        int id = databaseInstance.insertInto("regio_vragenlijst", databaseData);
+
         regio.setId(id);
         return regio;
     }
