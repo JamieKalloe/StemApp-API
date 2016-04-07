@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Jamie on 28-3-2016.
  */
-public class SchoolDAO {
+public class SchoolDAO implements DAO<School> {
 
     //Variables
     private List<School> schools;
@@ -26,10 +26,12 @@ public class SchoolDAO {
         this.schools = getAllFromDatabase();
     }
 
+    @Override
     public List<School> getAll() {
         return this.schools;
     }
 
+    @Override
     public School get(int id) {
         try {
             for(School school : schools) {
@@ -59,6 +61,7 @@ public class SchoolDAO {
         }
     }
 
+    @Override
     public void add(School school) {
         if(!exists(school)) {
             school = this.addSchoolToDatabase(school);
@@ -67,6 +70,7 @@ public class SchoolDAO {
         }
     }
 
+    @Override
     public void update(int id, School school) {
         School oldSchool = this.get(id);
         school.setId(id);
@@ -78,6 +82,7 @@ public class SchoolDAO {
         schools.set(idInList, school);
     }
 
+    @Override
     public void delete(int id) {
         School school = this.get(id);
         this.removeSchoolFromDatabase(school);

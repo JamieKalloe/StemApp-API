@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Jamie on 4-4-2016.
  */
-public class VragenlijstDAO {
+public class VragenlijstDAO implements DAO<Vragenlijst> {
 
     //Variables
     private List<Vragenlijst> vragenlijsten;
@@ -24,10 +24,12 @@ public class VragenlijstDAO {
         this.vragenlijsten = this.getAllFromDatabase();
     }
 
+    @Override
     public List<Vragenlijst> getAll() {
         return this.vragenlijsten;
     }
 
+    @Override
     public Vragenlijst get(int id) {
         try {
             for(Vragenlijst vragenlijst : vragenlijsten) {
@@ -43,11 +45,13 @@ public class VragenlijstDAO {
         }
     }
 
+    @Override
     public void add(Vragenlijst vragenlijst) {
         vragenlijst = this.addVragenlijstToDatabase(vragenlijst);
         vragenlijsten.add(vragenlijst);
     }
 
+    @Override
     public void update(int id, Vragenlijst vragenlijst) {
         Vragenlijst oldVragenlijst = this.get(id);
         vragenlijst.setId(id);
@@ -57,6 +61,7 @@ public class VragenlijstDAO {
         vragenlijsten.set(idInList, vragenlijst);
     }
 
+    @Override
     public void delete(int id) {
         Vragenlijst vragenlijst = this.get(id);
         this.removeVragenlijstFromDatabase(vragenlijst);

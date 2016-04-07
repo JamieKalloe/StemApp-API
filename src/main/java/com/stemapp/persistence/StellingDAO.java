@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by Jamie on 4-4-2016.
  */
-public class StellingDAO {
+public class StellingDAO implements DAO<Stelling> {
 
     //Variables
     private List<Stelling> stellingen;
@@ -24,6 +24,7 @@ public class StellingDAO {
         this.stellingen = this.getAllFromDatabase();
     }
 
+    @Override
     public List<Stelling> getAll() {
         return this.stellingen;
     }
@@ -40,6 +41,7 @@ public class StellingDAO {
         return stellingList;
     }
 
+    @Override
     public Stelling get(int id) {
         try {
             for(Stelling stelling : stellingen) {
@@ -55,11 +57,13 @@ public class StellingDAO {
         }
     }
 
+    @Override
     public void add(Stelling stelling) {
         stelling = this.addStellingToDatabase(stelling);
         stellingen.add(stelling);
     }
 
+    @Override
     public void update(int id, Stelling stelling) {
         Stelling oldStelling = this.get(id);
         stelling.setId(id);
@@ -69,6 +73,7 @@ public class StellingDAO {
         stellingen.set(idInList, stelling);
     }
 
+    @Override
     public void delete(int id) {
         Stelling stelling = this.get(id);
         this.removeStellingFromDatabase(stelling);

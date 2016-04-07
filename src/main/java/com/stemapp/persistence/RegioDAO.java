@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Jamie on 27-3-2016.
  */
-public class RegioDAO {
+public class RegioDAO implements DAO<Regio> {
 
     //Variables
     private List<Regio> regios;
@@ -23,6 +23,7 @@ public class RegioDAO {
         regios = this.getAllFromDatabase();
     }
 
+    @Override
     public List<Regio> getAll() {
         return this.regios;
     }
@@ -31,6 +32,7 @@ public class RegioDAO {
         return this.getAllFromDatabaseFor(id);
     }
 
+    @Override
     public Regio get(int id) {
         try {
             for(Regio regio : regios) {
@@ -75,6 +77,7 @@ public class RegioDAO {
         }
     }
 
+    @Override
     public void add(Regio regio) {
         if(!exists(regio)) {
             regio = this.addRegioToDatabase(regio);
@@ -86,6 +89,7 @@ public class RegioDAO {
         regio = this.addRegioToDatabaseFor(id, regio);
     }
 
+    @Override
     public void update(int id, Regio regio) {
         Regio oldRegio = this.get(id);
         regio.setId(id);
@@ -95,6 +99,7 @@ public class RegioDAO {
         regios.set(idInList, regio);
     }
 
+    @Override
     public void delete(int id) {
         Regio regio = this.get(id);
         this.removeRegioFromDatabase(regio);
