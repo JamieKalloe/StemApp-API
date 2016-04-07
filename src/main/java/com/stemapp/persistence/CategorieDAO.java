@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Jamie on 1-4-2016.
  */
-public class CategorieDAO {
+public class CategorieDAO implements DAO<Categorie> {
 
     //Variables
     private List<Categorie> categories;
@@ -23,10 +23,12 @@ public class CategorieDAO {
         this.categories = this.getAllFromDatabase();
     }
 
+    @Override
     public List<Categorie> getAll() {
         return this.categories;
     }
 
+    @Override
     public Categorie get(int id) {
         try {
             for(Categorie categorie : categories) {
@@ -42,11 +44,13 @@ public class CategorieDAO {
         }
     }
 
+    @Override
     public void add(Categorie categorie) {
         categorie = this.addCategorieToDatabase(categorie);
         categories.add(categorie);
     }
 
+    @Override
     public void update(int id, Categorie categorie) {
         Categorie oldCategorie = this.get(id);
         categorie.setId(id);
@@ -56,6 +60,7 @@ public class CategorieDAO {
         categories.set(idInList, categorie);
     }
 
+    @Override
     public void delete(int id) {
         Categorie categorie = this.get(id);
         this.removeCategorieFromDatabase(categorie);
