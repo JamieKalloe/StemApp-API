@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Jamie on 7-4-2016.
  */
-interface DAO<T> {
+public interface DAO<T> {
 
     List<T> getAll();
 

@@ -2,10 +2,7 @@ package com.stemapp.service;
 
 import com.stemapp.model.Regio;
 import com.stemapp.model.Vragenlijst;
-import com.stemapp.persistence.CategorieDAO;
-import com.stemapp.persistence.RegioDAO;
-import com.stemapp.persistence.StellingDAO;
-import com.stemapp.persistence.VragenlijstDAO;
+import com.stemapp.persistence.*;
 
 import java.util.Collection;
 
