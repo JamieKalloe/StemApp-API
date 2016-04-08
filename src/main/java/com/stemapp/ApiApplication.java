@@ -11,6 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -82,6 +83,7 @@ public class ApiApplication extends Application<ApiConfiguration> {
         //Register
         configureClientFilter(environment);
 
+        environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(regioResource);
         environment.jersey().register(schoolResource);
         environment.jersey().register(csvResource);
