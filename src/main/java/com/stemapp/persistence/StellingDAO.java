@@ -26,35 +26,16 @@ public class StellingDAO implements DAO<Stelling> {
 
     @Override
     public List<Stelling> getAll() {
-        return this.stellingen;
+        return this.getAllFromDatabase();
     }
 
     public List<Stelling> getAll(int id) {
-        List<Stelling> stellingList = new ArrayList<>();
-
-        for(Stelling stelling : stellingen) {
-            if(stelling.getVragenlijstId() == id) {
-                stellingList.add(stelling);
-            }
-        }
-
-        return stellingList;
+        return this.getAllFromDatabase(id);
     }
 
     @Override
     public Stelling get(int id) {
-        try {
-            for(Stelling stelling : stellingen) {
-                if(stelling.getId() == id) {
-                    return stelling;
-                }
-            }
-            return null;
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return this.getStelling(id);
     }
 
     @Override
@@ -65,19 +46,12 @@ public class StellingDAO implements DAO<Stelling> {
 
     @Override
     public void update(int id, Stelling stelling) {
-        Stelling oldStelling = this.get(id);
-        stelling.setId(id);
-
-        this.updateStellingFromDatabase(stelling);
-        int idInList = stellingen.indexOf(oldStelling);
-        stellingen.set(idInList, stelling);
+        this.updateStellingFromDatabase(id, stelling);
     }
 
     @Override
     public void delete(int id) {
-        Stelling stelling = this.get(id);
-        this.removeStellingFromDatabase(stelling);
-        stellingen.remove(stelling);
+        this.removeStellingFromDatabase(get(id));
     }
 
     private List<Stelling> getAllFromDatabase() {
@@ -104,6 +78,50 @@ public class StellingDAO implements DAO<Stelling> {
         return stellingList;
     }
 
+    private List<Stelling> getAllFromDatabase(int vragenlijstId) {
+        List<Stelling> stellingList = new ArrayList<>();
+        ResultSet results = databaseInstance.select("stelling", "vragenlijst_id=" + vragenlijstId);
+
+        try {
+            while(results.next()) {
+                Stelling stelling = new Stelling();
+
+                stelling.setId(results.getInt("id"));
+                stelling.setVragenlijstId(results.getInt("vragenlijst_id"));
+                stelling.setTitel(results.getString("titel"));
+                stelling.setStelling(results.getString("stelling"));
+                stelling.setUitleg(results.getString("uitleg"));
+
+                stellingList.add(stelling);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return stellingList;
+    }
+
+    private Stelling getStelling(int id) {
+        ResultSet results = databaseInstance.select("stelling", id);
+        Stelling stelling = new Stelling();
+
+        try {
+            if(results.next()) {
+                stelling.setId(results.getInt("id"));
+                stelling.setVragenlijstId(results.getInt("vragenlijst_id"));
+                stelling.setTitel(results.getString("titel"));
+                stelling.setStelling(results.getString("stelling"));
+                stelling.setUitleg(results.getString("uitleg"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return stelling;
+    }
+
     private Stelling addStellingToDatabase(Stelling stelling) {
         HashMap databaseData = new HashMap();
 
@@ -118,7 +136,7 @@ public class StellingDAO implements DAO<Stelling> {
         return stelling;
     }
 
-    private void updateStellingFromDatabase(Stelling stelling) {
+    private void updateStellingFromDatabase(int id, Stelling stelling) {
         HashMap databaseData = new HashMap();
 
         databaseData.put("vragenlijst_id", stelling.getVragenlijstId());
@@ -126,7 +144,7 @@ public class StellingDAO implements DAO<Stelling> {
         databaseData.put("stelling", stelling.getStelling());
         databaseData.put("uitleg", stelling.getUitleg());
 
-        databaseInstance.update("stelling", stelling.getId(), databaseData);
+        databaseInstance.update("stelling", id, databaseData);
     }
 
     private void removeStellingFromDatabase(Stelling stelling) {
