@@ -16,12 +16,10 @@ import java.util.List;
 public class StellingDAO implements DAO<Stelling> {
 
     //Variables
-    private List<Stelling> stellingen;
     private final Database databaseInstance;
 
     public StellingDAO() {
         this.databaseInstance = Database.getInstance();
-        this.stellingen = this.getAllFromDatabase();
     }
 
     @Override
@@ -40,8 +38,7 @@ public class StellingDAO implements DAO<Stelling> {
 
     @Override
     public void add(Stelling stelling) {
-        stelling = this.addStellingToDatabase(stelling);
-        stellingen.add(stelling);
+        addStellingToDatabase(stelling);
     }
 
     @Override
