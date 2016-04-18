@@ -15,95 +15,59 @@ import java.util.List;
 public class RegioDAO implements DAO<Regio> {
 
     //Variables
-    private List<Regio> regios;
     private final Database databaseInstance;
 
     public RegioDAO() {
         this.databaseInstance = Database.getInstance();
-        regios = this.getAllFromDatabase();
     }
 
     @Override
     public List<Regio> getAll() {
-        return this.regios;
+        return this.getAllFromDatabase();
     }
 
-    public List<Regio> getAll(int id) {
-        return this.getAllFromDatabaseFor(id);
+    public List<Regio> getAll(int vragenlijstId) {
+        return this.getAllFromDatabaseFor(vragenlijstId);
     }
 
     @Override
     public Regio get(int id) {
-        try {
-            for(Regio regio : regios) {
-                if(regio.getId() == id) {
-                    return regio;
-                }
-            }
-            return null;
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return this.getRegio(id);
     }
 
     public Regio getByName(String name) {
-        try {
-            for(Regio regio : regios) {
-                if(regio.getName().toLowerCase().equals(name.toLowerCase())) {
-                    return regio;
-                }
-            }
-            return null;
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return this.getRegio(name);
     }
 
-    public boolean exists(Regio checkRegio) {
-        try {
-            for(Regio regio : regios) {
-                if(regio.getName().toLowerCase().equals(checkRegio.getName().toLowerCase())) {
-                    return true;
-                }
-            }
+    public boolean exists(String name) {
+
+        Regio checkRegio = this.getByName(name);
+        if(!checkRegio.getName().isEmpty()) {
             return false;
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return true;
         }
+
+        return true;
     }
 
     @Override
     public void add(Regio regio) {
-        if(!exists(regio)) {
-            regio = this.addRegioToDatabase(regio);
-            regios.add(regio);
-        }
+//        if(!exists(regio.getName())) {
+            this.addRegioToDatabase(regio);
+//        }
     }
 
     public void add(int id, Regio regio) {
-        regio = this.addRegioToDatabaseFor(id, regio);
+        this.addRegioToDatabaseFor(id, regio);
     }
 
     @Override
     public void update(int id, Regio regio) {
-        Regio oldRegio = this.get(id);
-        regio.setId(id);
-
-        this.updateRegioFromDatabase(regio);
-        int idInList = regios.indexOf(oldRegio);
-        regios.set(idInList, regio);
+        this.updateRegioFromDatabase(id, regio);
     }
 
     @Override
     public void delete(int id) {
-        Regio regio = this.get(id);
-        this.removeRegioFromDatabase(regio);
-        regios.remove(regio);
+        this.removeRegioFromDatabase(get(id));
     }
 
     private List<Regio> getAllFromDatabase() {
@@ -135,6 +99,7 @@ public class RegioDAO implements DAO<Regio> {
             while(results.next()) {
                 Regio regio = new Regio();
 
+                //get from dao itself..
                 regio.setId(results.getInt("regio_id"));
                 regioList.add(regio);
             }
@@ -144,6 +109,40 @@ public class RegioDAO implements DAO<Regio> {
         }
 
         return regioList;
+    }
+
+    public Regio getRegio(int id) {
+        ResultSet results = databaseInstance.select("regio", id);
+        Regio regio = new Regio();
+
+        try {
+            if(results.next()) {
+                regio.setId(results.getInt("id"));
+                regio.setName(results.getString("naam"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return regio;
+    }
+
+    public Regio getRegio(String name) {
+        ResultSet results = databaseInstance.select("regio", "naam=" + name);
+        Regio regio = new Regio();
+
+        try {
+            if(results.next()) {
+                regio.setId(results.getInt("id"));
+                regio.setName(results.getString("naam"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return regio;
     }
 
     private Regio addRegioToDatabase(Regio regio) {
@@ -168,12 +167,12 @@ public class RegioDAO implements DAO<Regio> {
         return regio;
     }
 
-    private void updateRegioFromDatabase(Regio regio) {
+    private void updateRegioFromDatabase(int id, Regio regio) {
         HashMap databaseData = new HashMap();
 
         databaseData.put("naam", regio.getName());
 
-        databaseInstance.update("regio", regio.getId(), databaseData);
+        databaseInstance.update("regio", id, databaseData);
     }
 
     private void removeRegioFromDatabase(Regio regio) {
