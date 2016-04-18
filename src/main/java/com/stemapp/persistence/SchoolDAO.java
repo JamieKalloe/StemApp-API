@@ -16,77 +16,41 @@ import java.util.List;
 public class SchoolDAO implements DAO<School> {
 
     //Variables
-    private List<School> schools;
     private final Database databaseInstance;
-    private final RegioDAO regioDAO;
 
     public SchoolDAO(RegioDAO regioDAO) {
         this.databaseInstance = Database.getInstance();
-        this.regioDAO = regioDAO;
-        this.schools = getAllFromDatabase();
     }
 
     @Override
     public List<School> getAll() {
-        return this.schools;
+        return this.getAllFromDatabase();
     }
 
     @Override
     public School get(int id) {
-        try {
-            for(School school : schools) {
-                if(school.getId() == id) {
-                    return school;
-                }
-            }
-            return null;
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return this.getSchool(id);
     }
 
     public boolean exists(School checkSchool) {
-        try {
-            for(School school : schools) {
-                if(school.getName().toLowerCase().equals(checkSchool.getName().toLowerCase())) {
-                    return true;
-                }
-            }
-            return false;
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return true;
-        }
+        return true;
     }
 
     @Override
     public void add(School school) {
-        if(!exists(school)) {
-            school = this.addSchoolToDatabase(school);
-            school.setRegio(regioDAO.get(school.getRegio().getId()));
-            schools.add(school);
-        }
+//        if(!exists(school)) {
+            this.addSchoolToDatabase(school);
+//        }
     }
 
     @Override
     public void update(int id, School school) {
-        School oldSchool = this.get(id);
-        school.setId(id);
-
-        this.updateSchoolFromDatabase(school);
-        int idInList = schools.indexOf(oldSchool);
-
-        school.setRegio(regioDAO.get(school.getRegio().getId()));
-        schools.set(idInList, school);
+        this.updateSchoolFromDatabase(id, school);
     }
 
     @Override
     public void delete(int id) {
-        School school = this.get(id);
-        this.removeSchoolFromDatabase(school);
-        schools.remove(school);
+        this.removeSchoolFromDatabase(get(id));
     }
 
     private List<School> getAllFromDatabase() {
@@ -99,8 +63,7 @@ public class SchoolDAO implements DAO<School> {
 
                 school.setId(results.getInt("id"));
                 school.setName(results.getString("naam"));
-//                school.setRegio(new Regio(results.getInt("regio_id")));
-                school.setRegio(regioDAO.get(results.getInt("regio_id")));
+                school.setRegio(new Regio(results.getInt("regio_id")));
 
                 schoolList.add(school);
             }
@@ -110,6 +73,24 @@ public class SchoolDAO implements DAO<School> {
         }
 
         return schoolList;
+    }
+
+    private School getSchool(int id) {
+        ResultSet results = databaseInstance.select("school", id);
+        School school = new School();
+
+        try {
+            if(results.next()) {
+                school.setId(results.getInt("id"));
+                school.setName(results.getString("naam"));
+                school.setRegio(new Regio(results.getInt("regio_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return school;
     }
 
     private School addSchoolToDatabase(School school) {
@@ -124,13 +105,13 @@ public class SchoolDAO implements DAO<School> {
         return school;
     }
 
-    private void updateSchoolFromDatabase(School school) {
+    private void updateSchoolFromDatabase(int id, School school) {
         HashMap databaseData = new HashMap();
 
         databaseData.put("regio_id", school.getRegio().getId());
         databaseData.put("naam", school.getName());
 
-        databaseInstance.update("school", school.getId(), databaseData);
+        databaseInstance.update("school", id, databaseData);
     }
 
     private void removeSchoolFromDatabase(School school) {
