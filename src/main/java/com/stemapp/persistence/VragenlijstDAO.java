@@ -16,56 +16,35 @@ import java.util.List;
 public class VragenlijstDAO implements DAO<Vragenlijst> {
 
     //Variables
-    private List<Vragenlijst> vragenlijsten;
     private final Database databaseInstance;
 
     public VragenlijstDAO() {
         this.databaseInstance = Database.getInstance();
-        this.vragenlijsten = this.getAllFromDatabase();
     }
 
     @Override
     public List<Vragenlijst> getAll() {
-        return this.vragenlijsten;
+        return this.getAllFromDatabase();
     }
 
     @Override
     public Vragenlijst get(int id) {
-        try {
-            for(Vragenlijst vragenlijst : vragenlijsten) {
-                if(vragenlijst.getId() == id) {
-                    return vragenlijst;
-                }
-            }
-            return null;
-
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return this.getVragenlijst(id);
     }
 
     @Override
     public void add(Vragenlijst vragenlijst) {
-        vragenlijst = this.addVragenlijstToDatabase(vragenlijst);
-        vragenlijsten.add(vragenlijst);
+        this.addVragenlijstToDatabase(vragenlijst);
     }
 
     @Override
     public void update(int id, Vragenlijst vragenlijst) {
-        Vragenlijst oldVragenlijst = this.get(id);
-        vragenlijst.setId(id);
-
-        this.updateVragenlijstFromDatabase(vragenlijst);
-        int idInList = vragenlijsten.indexOf(oldVragenlijst);
-        vragenlijsten.set(idInList, vragenlijst);
+        this.updateVragenlijstFromDatabase(vragenlijst, id);
     }
 
     @Override
     public void delete(int id) {
-        Vragenlijst vragenlijst = this.get(id);
-        this.removeVragenlijstFromDatabase(vragenlijst);
-        vragenlijsten.remove(vragenlijst);
+        this.removeVragenlijstFromDatabase(get(id));
     }
 
     private List<Vragenlijst> getAllFromDatabase() {
@@ -95,6 +74,29 @@ public class VragenlijstDAO implements DAO<Vragenlijst> {
         return vragenlijstList;
     }
 
+    private Vragenlijst getVragenlijst(int id) {
+        ResultSet results = databaseInstance.select("vragenlijst", id);
+        Vragenlijst vragenlijst = new Vragenlijst();
+
+        try {
+            if(results.next()) {
+                vragenlijst.setId(results.getInt("id"));
+                vragenlijst.setNaam(results.getString("naam"));
+                vragenlijst.setCategorie(new Categorie(results.getInt("categorie_id")));
+                vragenlijst.setStatus(results.getBoolean("status"));
+                vragenlijst.setStudentStartDatum(results.getDate("start_datum_student"));
+                vragenlijst.setStudentEindDatum(results.getDate("eind_datum_student"));
+                vragenlijst.setPoliticiStartDatum(results.getDate("start_datum_politici"));
+                vragenlijst.setPoliticiEindDatum(results.getDate("eind_datum_politici"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return vragenlijst;
+    }
+
     private Vragenlijst addVragenlijstToDatabase(Vragenlijst vragenlijst) {
         HashMap databaseData = new HashMap();
 
@@ -112,7 +114,7 @@ public class VragenlijstDAO implements DAO<Vragenlijst> {
         return vragenlijst;
     }
 
-    private void updateVragenlijstFromDatabase(Vragenlijst vragenlijst) {
+    private void updateVragenlijstFromDatabase(Vragenlijst vragenlijst, int id) {
         HashMap databaseData = new HashMap();
 
         databaseData.put("naam", vragenlijst.getNaam());
@@ -123,7 +125,7 @@ public class VragenlijstDAO implements DAO<Vragenlijst> {
         databaseData.put("start_datum_politici", vragenlijst.getPoliticiStartDatum().toString());
         databaseData.put("eind_datum_politici", vragenlijst.getPoliticiEindDatum().toString());
 
-        databaseInstance.update("vragenlijst", vragenlijst.getId(), databaseData);
+        databaseInstance.update("vragenlijst", id, databaseData);
     }
 
     private void removeVragenlijstFromDatabase(Vragenlijst vragenlijst) {
