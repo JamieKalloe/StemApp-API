@@ -18,7 +18,7 @@ public class SchoolDAO implements DAO<School> {
     //Variables
     private final Database databaseInstance;
 
-    public SchoolDAO(RegioDAO regioDAO) {
+    public SchoolDAO() {
         this.databaseInstance = Database.getInstance();
     }
 

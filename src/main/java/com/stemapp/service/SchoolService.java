@@ -5,6 +5,7 @@ import com.stemapp.persistence.RegioDAO;
 import com.stemapp.persistence.SchoolDAO;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Jamie on 28-3-2016.
@@ -13,24 +14,30 @@ public class SchoolService extends BaseService<School> implements Service<School
 
     //Variables
     private final SchoolDAO dao;
+    private final RegioDAO regioDAO;
 
-    public SchoolService(SchoolDAO dao) {
+    public SchoolService(SchoolDAO dao, RegioDAO regioDAO) {
         this.dao = dao;
+        this.regioDAO = regioDAO;
     }
 
     @Override
     public Collection<School> getAll() {
-        return dao.getAll();
+        Collection<School> schools = dao.getAll();
+
+        for(School school : schools) {
+            school.setRegio(regioDAO.get(school.getRegio().getId()));
+        }
+
+        return schools;
     }
 
     @Override
     public School get(int id) {
-//        //Get the school from the DAO, throws exception if not found.
-//        School school = requireResult(dao.get(id));
-//
-//        //Get the Regio data from the RegioDAO, given the RegioId from the School model.
-//        school.setRegio(new RegioDAO().get(school.getRegio().getId()));
-        return requireResult(dao.get(id));
+        School school = dao.get(id);
+        school.setRegio(regioDAO.get(school.getRegio().getId()));
+
+        return requireResult(school);
     }
 
     @Override
@@ -40,17 +47,11 @@ public class SchoolService extends BaseService<School> implements Service<School
 
     @Override
     public void update(int id, School school) {
-        //Check if the school exists
-        School checkSchool = get(id);
-
         dao.update(id, school);
     }
 
     @Override
     public void delete(int id) {
-        //Check if the school exists
-        School checkSchool = get(id);
-
         dao.delete(id);
     }
 }

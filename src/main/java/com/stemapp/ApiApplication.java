@@ -59,14 +59,14 @@ public class ApiApplication extends Application<ApiConfiguration> {
 
         //Create and register DAOs, Services and Resources.
         RegioDAO regioDAO = new RegioDAO();
-        SchoolDAO schoolDAO = new SchoolDAO(regioDAO);
+        SchoolDAO schoolDAO = new SchoolDAO();
         CsvDAO csvDAO = new CsvDAO(regioDAO, schoolDAO);
         StellingDAO stellingDAO = new StellingDAO();
         CategorieDAO categorieDAO = new CategorieDAO();
         VragenlijstDAO vragenlijstDAO = new VragenlijstDAO();
 
         RegioService regioService = new RegioService(regioDAO);
-        SchoolService schoolService = new SchoolService(schoolDAO);
+        SchoolService schoolService = new SchoolService(schoolDAO, regioDAO);
         CsvService csvService = new CsvService(csvDAO);
         CategorieService categorieService = new CategorieService(categorieDAO);
         StellingService stellingService = new StellingService(stellingDAO);
